@@ -38,6 +38,8 @@ missing_table.to_csv(r'C:\Users\oybek\Downloads\IDX\csv\missing_values_summary.c
 numeric_summary.to_csv(r'C:\Users\oybek\Downloads\IDX\csv\numeric_summary.csv', index=True)
 sold_residential.to_csv(r'C:\Users\oybek\Downloads\IDX\csv\sold_residential_cleaned.csv', index=False)
 
+# ---------- SUMMARY ----------
+
 # Columns over 90% missing (15 columns):
 # 100%: TaxYear, FireplacesTotal, TaxAnnualAmount, AboveGradeFinishedArea,
 #       ElementarySchoolDistrict, BusinessType, CoveredSpaces, MiddleOrJuniorSchoolDistrict
