@@ -1,6 +1,6 @@
 import pandas as pd
 
-# Load the sold residential and listings residential dataset
+# Load the sold residential and listings residential datasets
 sold = pd.read_csv(r'C:\Users\oybek\Downloads\IDX\csv\sold_residential_202401-202604.csv', low_memory=False)
 listings = pd.read_csv(r'C:\Users\oybek\Downloads\IDX\csv\listing_residential_202401-202604.csv', low_memory=False)
 
