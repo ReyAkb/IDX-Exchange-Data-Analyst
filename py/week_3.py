@@ -42,6 +42,8 @@ print(listings_with_rates[['ListingContractDate', 'year_month', 'ListPrice', 'ra
 sold_with_rates.to_csv(r'C:\Users\oybek\Downloads\IDX\csv\sold_with_rates.csv', index=False)
 listings_with_rates.to_csv(r'C:\Users\oybek\Downloads\IDX\csv\listings_with_rates.csv', index=False)
 
+# ---------- SUMMARY ----------
+
 # Mortgage rate merge (FRED MORTGAGE30US, weekly -> monthly average)
 # Sold keyed on CloseDate, listings keyed on ListingContractDate (year_month)
 # Validation: 0 null rates in sold_with_rates and listings_with_rates
