@@ -1,6 +1,7 @@
 import pandas as pd
 
 sold = pd.read_csv(r'C:\Users\oybek\Downloads\IDX\csv\sold_with_rates.csv', low_memory=False)
+
 rows_start = len(sold)
 
 # Convert data columns to datetime
@@ -51,20 +52,35 @@ print("Listing after close count:", sold['listing_after_close_flag'].sum())
 print("Purchase after close count:", sold['purchase_after_close_flag'].sum())
 print("Negative timeline count:", sold['negative_timeline_flag'].sum())
 
-# Geographic validation: Check for invalid latitude and longitude values
+# Check for invalid latitude and longitude values
 sold['missing_coordinates_flag'] = sold['Latitude'].isnull() | sold['Longitude'].isnull()
 sold['zero_coordinates_flag'] = (sold['Latitude'] == 0) | (sold['Longitude'] == 0)
 sold['positive_longitude_flag'] = sold['Longitude'] > 0  # Longitude should be negative in the US
 
+# Out of state flag
 has_coordinates = ~(sold['missing_coordinates_flag'])
+state_not_ca = sold['StateOrProvince'] != 'CA'
+state_missing = sold['StateOrProvince'].isnull()
 outside_california = has_coordinates & ((sold['Longitude'] > -114.1312) | (sold['Longitude'] < -124.4096) | (sold['Latitude'] < 32.5343) | (sold['Latitude'] > 42.0095))
-sold['out_of_state_flag'] = outside_california | (sold['StateOrProvince'] != 'CA')
+sold['out_of_state_flag'] = outside_california | state_not_ca
 
+# Geographic validation
 print("\nGeographic validation counts:")
 print("Missing coordinates:", sold['missing_coordinates_flag'].sum())
 print("Zero coordinates:", sold['zero_coordinates_flag'].sum())
 print("Positive longitude:", sold['positive_longitude_flag'].sum())
 print("Out of state:", sold['out_of_state_flag'].sum())
+
+# Out of state breakdown
+print("\nOut of state breakdown:")
+print("State is not CA:", state_not_ca.sum())
+print("  - state is missing:", state_missing.sum())
+print("  - state is another value:", (state_not_ca & ~state_missing).sum())
+print("Coordinates outside the California box:", outside_california.sum())
+print("In both groups:", (state_not_ca & outside_california).sum())
+print("Total flagged (out_of_state_flag):", sold['out_of_state_flag'].sum())
+
+print("\nTop state values:\n", sold['StateOrProvince'].value_counts(dropna=False).head())
 
 print(f"\nInitial sold dataset rows: {rows_start}")
 print(f"\nFinal sold dataset rows after all cleaning: {len(sold)}")
@@ -97,3 +113,6 @@ sold.to_csv(r'C:\Users\oybek\Downloads\IDX\csv\sold_cleaned_with_rates.csv', ind
 # - Latitude or longitude equal to 0: 27 rows
 # - Positive longitude: 31 rows
 # - Out of state or outside the California area: 104 rows
+#   - 29 rows have a state that is not CA (none have a missing state)
+#   - 93 rows have coordinates outside the California box
+#   - 18 rows are in both groups, so 11 + 75 + 18 = 104
