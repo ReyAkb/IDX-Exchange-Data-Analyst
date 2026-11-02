@@ -144,7 +144,7 @@ print("\nSummary by school district:\n", segment_summary('school_district').head
 
 sold.to_csv(r'C:\Users\oybek\Downloads\IDX\csv\sold_cleaned_with_rates_and_metrics.csv', index=False)
 
-# ---------- Summary of Week 6 (sold data, Jan 2024 - Apr 2026) ----------
+# ---------- Summary ----------
 
 # New columns
 # - price_ratio = ClosePrice / OriginalListPrice
