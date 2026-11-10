@@ -135,7 +135,7 @@ sold_filtered.to_csv(r'C:\Users\oybek\Downloads\IDX\csv\sold_filtered.csv', inde
 comparison.round(2).to_csv(r'C:\Users\oybek\Downloads\IDX\csv\before_after_comparison.csv')
 
 
-# ---------- Summary of Week 7 ----------
+# ---------- Summary ----------
 
 # Method
 # - IQR method with a multiplier of 3.0: lower = Q1 - 3 * IQR, upper = Q3 + 3 * IQR, calculated once on
